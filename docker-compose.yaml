@@ -1,0 +1,42 @@
+services:
+  bazarr:
+    image: lscr.io/linuxserver/bazarr
+    container_name: bazarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Belgrade
+    volumes:
+      - ./bazarr/config:/config
+      - ./mediacenter:/mediacenter
+    ports:
+      - 6767:6767
+    restart: always
+
+  whisper:
+    image: onerahmet/openai-whisper-asr-webservice:latest-gpu
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: ["gpu"]
+    ports:
+      - "9000:9000"
+    environment:
+      - ASR_MODEL=small
+      - ASR_ENGINE=openai_whisper
+    runtime: nvidia
+    restart: unless-stopped
+
+  aeneas:
+    build:
+      context: ./aeneas
+    container_name: aeneas
+    restart: unless-stopped
+    volumes:
+      - ./mediacenter:/mediacenter
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_APP=/aeneas/app.py
+    entrypoint: ["python3", "/aeneas/app.py"]

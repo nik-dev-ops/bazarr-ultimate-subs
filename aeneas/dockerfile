@@ -1,0 +1,29 @@
+FROM python:3.9-slim
+
+RUN apt-get update && apt-get install -y \
+    espeak \
+    libespeak-dev \
+    libsndfile1 \
+    ffmpeg \
+    libmagic-dev \
+    build-essential \
+    python3-dev \
+    gcc \
+    jq \
+    curl \
+    && apt-get clean
+
+RUN pip install --upgrade pip
+
+RUN pip install numpy \
+    && pip install aeneas \
+    && pip install Flask
+
+COPY process_subtitles.py /aeneas/process_subtitles.py
+COPY app.py /aeneas/app.py
+
+WORKDIR /aeneas
+
+EXPOSE 5000
+
+ENTRYPOINT ["python", "/aeneas/app.py"]
