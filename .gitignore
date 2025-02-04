@@ -172,3 +172,14 @@ cython_debug/
 
 #full docker
 docker-compose-full.yaml
+bazarr/get_providers.py
+bazarr/custom_whisper.py
+bazarr/list.ts
+bazarr/config/config/analytics_visitor_id.txt
+bazarr/config.py
+.docker-compose.yaml.swp
+bazarr/config/config/announcements.json
+bazarr/config/config/releases.txt
+bazarr/config/db/bazarr.db
+bazarr/config/config/config.yaml
+bazarr/config/config.yaml

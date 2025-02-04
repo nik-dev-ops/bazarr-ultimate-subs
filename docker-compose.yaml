@@ -38,5 +38,7 @@ services:
     ports:
       - "5000:5000"
     environment:
+      - PUID=1000
+      - PGID=1000
       - FLASK_APP=/aeneas/app.py
     entrypoint: ["python3", "/aeneas/app.py"]
